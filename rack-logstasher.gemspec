@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Rack::Logstasher::VERSION
   spec.authors       = ["Alex Tomlins"]
   spec.email         = ["alex.tomlins@digital.cabinet-office.gov.uk"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Rack middleware to log requests in logstash json event format.  Like the logstasher gem, but for rack apps.}
+  spec.summary       = %q{Rack middleware to log requests in logstash json event format}
+  spec.homepage      = "https://github.com/alphagov/rack-logstasher"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

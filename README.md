@@ -1,6 +1,6 @@
 # Rack::Logstasher
 
-TODO: Write a gem description
+Rack middleware to log requests in logstash json event format
 
 ## Installation
 
@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this to the middleware stack.  e.g.
+
+    use Rask::Logstasher::Logger, Logger.new("/path/to/logfile.json.log")
 
 ## Contributing
 
