@@ -4,8 +4,9 @@ require 'logstash/event'
 module Rack
   module Logstasher
     class Logger < Rack::CommonLogger
-      def initialize(app, logger)
+      def initialize(app, logger, opts = {})
         super(app, logger)
+        @extra_headers = opts[:extra_headers] || {}
       end
 
       private
@@ -23,6 +24,13 @@ module Rack
           :request => request_line(env),
           :length => extract_content_length(header)
         }
+
+        @extra_headers.each do |header, log_key|
+          env_key = "HTTP_#{header.upcase.gsub('-', '_')}"
+          if env[env_key]
+            data[log_key] = env[env_key]
+          end
+        end
 
         event = LogStash::Event.new('@fields' => data, '@tags' => ['request'])
         msg = event.to_json + "\n"
