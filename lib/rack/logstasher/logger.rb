@@ -6,7 +6,7 @@ module Rack
     class Logger < Rack::CommonLogger
       def initialize(app, logger, opts = {})
         super(app, logger)
-        @extra_headers = opts[:extra_headers] || {}
+        @extra_request_headers = opts[:extra_request_headers] || {}
       end
 
       private
@@ -25,7 +25,7 @@ module Rack
           :length => extract_content_length(header)
         }
 
-        @extra_headers.each do |header, log_key|
+        @extra_request_headers.each do |header, log_key|
           env_key = "HTTP_#{header.upcase.gsub('-', '_')}"
           if env[env_key]
             data[log_key] = env[env_key]

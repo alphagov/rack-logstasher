@@ -49,7 +49,7 @@ describe "Logger" do
 
     describe "adding extra headers to the log" do
       before :each do
-        @extra_headers = {}
+        @extra_request_headers = {}
       end
       def app
         Rack::Logstasher::Logger.new(
@@ -58,12 +58,12 @@ describe "Logger" do
             [200, {}, ["Inner app response"]]
           },
           Logger.new(tmp_logfile_path),
-          :extra_headers => @extra_headers
+          :extra_request_headers => @extra_request_headers
         )
       end
 
       it "should add specified extra headers to the log under the given key" do
-        @extra_headers["foo"] = "header_foo"
+        @extra_request_headers["foo"] = "header_foo"
         get "/something", {}, {"HTTP_FOO" => "bar"}
 
         log_details = JSON.parse(last_log_line)
@@ -73,7 +73,7 @@ describe "Logger" do
       end
 
       it "should not add the key if the header is missing" do
-        @extra_headers["foo"] = "header_foo"
+        @extra_request_headers["foo"] = "header_foo"
         get "/something"
 
         log_details = JSON.parse(last_log_line)
@@ -83,7 +83,7 @@ describe "Logger" do
       end
 
       it "should handle dashes in header name" do
-        @extra_headers["Varnish-Id"] = "varnish_id"
+        @extra_request_headers["Varnish-Id"] = "varnish_id"
         get "/something", {}, {"HTTP_VARNISH_ID" => "1234"}
 
         log_details = JSON.parse(last_log_line)
