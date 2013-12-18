@@ -50,46 +50,95 @@ describe "Logger" do
     describe "adding extra headers to the log" do
       before :each do
         @extra_request_headers = {}
+        @extra_response_headers = {}
       end
       def app
         Rack::Logstasher::Logger.new(
           proc {|env|
-            sleep @sleep_time if @sleep_time
-            [200, {}, ["Inner app response"]]
+            headers = @inner_response_headers || {}
+            [200, headers, ["Inner app response"]]
           },
           Logger.new(tmp_logfile_path),
-          :extra_request_headers => @extra_request_headers
+          :extra_request_headers => @extra_request_headers,
+          :extra_response_headers => @extra_response_headers
         )
       end
 
-      it "should add specified extra headers to the log under the given key" do
-        @extra_request_headers["foo"] = "header_foo"
-        get "/something", {}, {"HTTP_FOO" => "bar"}
+      context "extra request headers" do
+        it "should add specified extra request headers to the log under the given key" do
+          @extra_request_headers["foo"] = "header_foo"
+          get "/something", {}, {"HTTP_FOO" => "bar"}
 
-        log_details = JSON.parse(last_log_line)
-        fields = log_details['@fields']
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
 
-        expect(fields['header_foo']).to eq('bar')
+          expect(fields['header_foo']).to eq('bar')
+        end
+
+        it "should not add the key if the header is missing" do
+          @extra_request_headers["foo"] = "header_foo"
+          get "/something"
+
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
+
+          expect(fields).not_to have_key('header_foo')
+        end
+
+        it "should handle dashes in header name" do
+          @extra_request_headers["Varnish-Id"] = "varnish_id"
+          get "/something", {}, {"HTTP_VARNISH_ID" => "1234"}
+
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
+
+          expect(fields['varnish_id']).to eq('1234')
+        end
       end
 
-      it "should not add the key if the header is missing" do
-        @extra_request_headers["foo"] = "header_foo"
-        get "/something"
+      context "extra response headers" do
+        it "should add specified extra response headers to the log under the given key" do
+          @extra_response_headers["foo"] = "header_foo"
+          @inner_response_headers = {"Foo" => "bar"}
+          get "/something"
 
-        log_details = JSON.parse(last_log_line)
-        fields = log_details['@fields']
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
 
-        expect(fields).not_to have_key('header_foo')
-      end
+          expect(fields['header_foo']).to eq('bar')
+        end
 
-      it "should handle dashes in header name" do
-        @extra_request_headers["Varnish-Id"] = "varnish_id"
-        get "/something", {}, {"HTTP_VARNISH_ID" => "1234"}
+        it "should not add the key if the header is missing" do
+          @extra_response_headers["foo"] = "header_foo"
+          get "/something"
 
-        log_details = JSON.parse(last_log_line)
-        fields = log_details['@fields']
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
 
-        expect(fields['varnish_id']).to eq('1234')
+          expect(fields).not_to have_key('header_foo')
+        end
+
+        it "should handle dashes in header name" do
+          @extra_response_headers["X-Cache"] = "cache_status"
+          @inner_response_headers = {"X-Cache" => "MISS"}
+          get "/something"
+
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
+
+          expect(fields['cache_status']).to eq('MISS')
+        end
+
+        it "should match header in a case-insensitive fashion" do
+          @extra_response_headers["X-CacHe"] = "cache_status"
+          @inner_response_headers = {"x-cAche" => "MISS"}
+          get "/something"
+
+          log_details = JSON.parse(last_log_line)
+          fields = log_details['@fields']
+
+          expect(fields['cache_status']).to eq('MISS')
+        end
       end
     end
   end
