@@ -1,5 +1,5 @@
 module Rack
   module Logstasher
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
   end
 end
