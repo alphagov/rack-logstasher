@@ -6,12 +6,13 @@ module Rack
     class Logger < Rack::CommonLogger
       def initialize(app, logger, opts = {})
         super(app, logger)
-        @extra_headers = opts[:extra_headers] || {}
+        @extra_request_headers = opts[:extra_request_headers] || {}
+        @extra_response_headers = opts[:extra_response_headers] || {}
       end
 
       private
 
-      def log(env, status, header, began_at)
+      def log(env, status, response_headers, began_at)
         now = Time.now
 
         data = {
@@ -22,13 +23,19 @@ module Rack
           :remote_addr => env['REMOTE_ADDR'],
           :parameters => env["QUERY_STRING"],
           :request => request_line(env),
-          :length => extract_content_length(header)
+          :length => extract_content_length(response_headers)
         }
 
-        @extra_headers.each do |header, log_key|
+        @extra_request_headers.each do |header, log_key|
           env_key = "HTTP_#{header.upcase.gsub('-', '_')}"
           if env[env_key]
             data[log_key] = env[env_key]
+          end
+        end
+
+        @extra_response_headers.each do |header, log_key|
+          if response_headers[header]
+            data[log_key] = response_headers[header]
           end
         end
 
