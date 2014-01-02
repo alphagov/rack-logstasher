@@ -26,7 +26,7 @@ describe "Logger" do
 
       expect(fields['method']).to eq('GET')
       expect(fields['path']).to eq('/foo')
-      expect(fields['parameters']).to eq('bar=baz')
+      expect(fields['query_string']).to eq('bar=baz')
       expect(fields['request']).to eq('GET /foo?bar=baz ') # env['SERVER_PROTOCOL'] is not set under rack-test
     end
 

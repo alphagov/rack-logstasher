@@ -18,10 +18,10 @@ module Rack
         data = {
           :method => env["REQUEST_METHOD"],
           :path => env["PATH_INFO"],
+          :query_string => env["QUERY_STRING"],
           :status => status.to_i,
           :duration => duration_in_ms(began_at, now).round(2),
           :remote_addr => env['REMOTE_ADDR'],
-          :parameters => env["QUERY_STRING"],
           :request => request_line(env),
           :length => extract_content_length(response_headers)
         }
