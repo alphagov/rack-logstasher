@@ -20,7 +20,7 @@ Or install it yourself as:
 
 Add this to the middleware stack.  e.g.
 
-    use Rask::Logstasher::Logger, Logger.new("/path/to/logfile.json.log")
+    use Rack::Logstasher::Logger, Logger.new("/path/to/logfile.json.log")
 
 ## Contributing
 
