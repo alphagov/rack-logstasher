@@ -1,5 +1,10 @@
-require 'rack/commonlogger'
 require 'logstash/event'
+
+begin
+  require 'rack/common_logger'
+rescue LoadError
+  require 'rack/commonlogger'
+end
 
 module Rack
   module Logstasher
