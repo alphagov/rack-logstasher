@@ -1,4 +1,4 @@
-require 'rack/commonlogger'
+require 'rack/common_logger'
 require 'logstash/event'
 
 module Rack
