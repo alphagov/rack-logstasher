@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rack", "~> 2.0"
   spec.add_dependency "logstash-event"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rack-test", "0.6.2"
   spec.add_development_dependency "rspec", "2.14.1"
