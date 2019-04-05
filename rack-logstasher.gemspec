@@ -6,8 +6,8 @@ require 'rack/logstasher/version'
 Gem::Specification.new do |spec|
   spec.name          = "rack-logstasher"
   spec.version       = Rack::Logstasher::VERSION
-  spec.authors       = ["Alex Tomlins"]
-  spec.email         = ["alex.tomlins@digital.cabinet-office.gov.uk"]
+  spec.authors       = ["GOV.UK Dev"]
+  spec.email         = ["govuk-dev@digital.cabinet-office.gov.uk"]
   spec.description   = %q{Rack middleware to log requests in logstash json event format.  Like the logstasher gem, but for rack apps.}
   spec.summary       = %q{Rack middleware to log requests in logstash json event format}
   spec.homepage      = "https://github.com/alphagov/rack-logstasher"
