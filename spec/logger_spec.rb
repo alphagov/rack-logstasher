@@ -22,12 +22,11 @@ describe "Logger" do
       get "/foo?bar=baz"
 
       log_details = JSON.parse(last_log_line)
-      fields = log_details['@fields']
 
-      expect(fields['method']).to eq('GET')
-      expect(fields['path']).to eq('/foo')
-      expect(fields['query_string']).to eq('bar=baz')
-      expect(fields['request']).to eq('GET /foo?bar=baz ') # env['SERVER_PROTOCOL'] is not set under rack-test
+      expect(log_details['method']).to eq('GET')
+      expect(log_details['path']).to eq('/foo')
+      expect(log_details['query_string']).to eq('bar=baz')
+      expect(log_details['request']).to eq('GET /foo?bar=baz ') # env['SERVER_PROTOCOL'] is not set under rack-test
     end
 
     it "should add request duration" do
@@ -35,16 +34,15 @@ describe "Logger" do
       get "/foo"
 
       log_details = JSON.parse(last_log_line)
-      fields = log_details['@fields']
 
-      expect(fields['duration']).to be_within(5).of(100)
+      expect(log_details['duration']).to be_within(5).of(100)
     end
 
     it "should add a tag of 'request'" do
       get "/foo?bar=baz"
 
       log_details = JSON.parse(last_log_line)
-      expect(log_details['@tags']).to eq(['request'])
+      expect(log_details['tags']).to eq(['request'])
     end
 
     describe "adding extra headers to the log" do
@@ -70,9 +68,8 @@ describe "Logger" do
           get "/something", {}, {"HTTP_FOO" => "bar"}
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields['header_foo']).to eq('bar')
+          expect(log_details['header_foo']).to eq('bar')
         end
 
         it "should not add the key if the header is missing" do
@@ -80,9 +77,8 @@ describe "Logger" do
           get "/something"
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields).not_to have_key('header_foo')
+          expect(log_details).not_to have_key('header_foo')
         end
 
         it "should handle dashes in header name" do
@@ -90,9 +86,8 @@ describe "Logger" do
           get "/something", {}, {"HTTP_VARNISH_ID" => "1234"}
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields['varnish_id']).to eq('1234')
+          expect(log_details['varnish_id']).to eq('1234')
         end
       end
 
@@ -103,9 +98,8 @@ describe "Logger" do
           get "/something"
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields['header_foo']).to eq('bar')
+          expect(log_details['header_foo']).to eq('bar')
         end
 
         it "should not add the key if the header is missing" do
@@ -113,9 +107,8 @@ describe "Logger" do
           get "/something"
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields).not_to have_key('header_foo')
+          expect(log_details).not_to have_key('header_foo')
         end
 
         it "should handle dashes in header name" do
@@ -124,9 +117,8 @@ describe "Logger" do
           get "/something"
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields['cache_status']).to eq('MISS')
+          expect(log_details['cache_status']).to eq('MISS')
         end
 
         it "should match header in a case-insensitive fashion" do
@@ -135,9 +127,8 @@ describe "Logger" do
           get "/something"
 
           log_details = JSON.parse(last_log_line)
-          fields = log_details['@fields']
 
-          expect(fields['cache_status']).to eq('MISS')
+          expect(log_details['cache_status']).to eq('MISS')
         end
       end
     end
