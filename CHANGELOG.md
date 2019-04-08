@@ -1,4 +1,4 @@
-# Unreleased
+# 1.0.1
 
 - *Changes logging format* to drop the "@fields" prefix and rename "@tags" to "tags".
 - Updates development dependencies
