@@ -39,7 +39,7 @@ module Rack
           end
         end
 
-        event = LogStash::Event.new('@fields' => data, '@tags' => ['request'])
+        event = LogStash::Event.new(data.merge('tags' => ['request']))
         msg = event.to_json + "\n"
         if @logger.respond_to?(:write)
           @logger.write(msg)
