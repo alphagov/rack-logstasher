@@ -13,7 +13,7 @@ module Rack
       private
 
       def log(env, status, response_headers, began_at)
-        now = Time.now
+        now = Utils.clock_time
 
         data = {
           :method => env["REQUEST_METHOD"],
