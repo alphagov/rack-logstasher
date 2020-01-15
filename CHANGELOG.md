@@ -1,4 +1,4 @@
-# unreleased
+# 1.0.2
 
 - Fix logging error where Rack uses the system monotonic clock.
 
