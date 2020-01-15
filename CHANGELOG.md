@@ -1,3 +1,7 @@
+# unreleased
+
+- Fix logging error where Rack uses the system monotonic clock.
+
 # 1.0.1
 
 - *Changes logging format* to drop the "@fields" prefix and rename "@tags" to "tags".
