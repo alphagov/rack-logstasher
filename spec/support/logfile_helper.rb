@@ -1,7 +1,7 @@
-require 'tempfile'
+require "tempfile"
 
 module LogfileHelper
-  TMP_LOGFILE = Tempfile.new('rack-logstasher-tmp-log')
+  TMP_LOGFILE = Tempfile.new("rack-logstasher-tmp-log")
 
   def reset_tmp_log
     TMP_LOGFILE.rewind
@@ -18,6 +18,6 @@ module LogfileHelper
 end
 
 RSpec.configuration.include(LogfileHelper)
-RSpec.configuration.before :each do
+RSpec.configuration.before do
   reset_tmp_log
 end
