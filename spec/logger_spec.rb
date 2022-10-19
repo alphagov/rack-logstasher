@@ -26,7 +26,7 @@ describe "Logger" do
       expect(log_details['method']).to eq('GET')
       expect(log_details['path']).to eq('/foo')
       expect(log_details['query_string']).to eq('bar=baz')
-      expect(log_details['request']).to eq('GET /foo?bar=baz ') # env['SERVER_PROTOCOL'] is not set under rack-test
+      expect(log_details['request']).to eq('GET /foo?bar=baz HTTP/1.0')
     end
 
     it "should add request duration" do
