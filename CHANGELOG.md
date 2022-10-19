@@ -1,3 +1,7 @@
+# Unreleased
+
+- Require Ruby 2.7 and greater
+
 # 1.0.2
 
 - Fix logging error where Rack uses the system monotonic clock.
