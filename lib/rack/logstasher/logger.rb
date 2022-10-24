@@ -1,5 +1,5 @@
-require 'rack/common_logger'
-require 'logstash/event'
+require "rack/common_logger"
+require "logstash/event"
 
 module Rack
   module Logstasher
@@ -10,20 +10,20 @@ module Rack
         @extra_response_headers = opts[:extra_response_headers] || {}
       end
 
-      private
+    private
 
       def log(env, status, response_headers, began_at)
         now = Utils.clock_time
 
         data = {
-          :method => env["REQUEST_METHOD"],
-          :path => env["PATH_INFO"],
-          :query_string => env["QUERY_STRING"],
-          :status => status.to_i,
-          :duration => duration_in_ms(began_at, now).round(2),
-          :remote_addr => env['REMOTE_ADDR'],
-          :request => request_line(env),
-          :length => extract_content_length(response_headers)
+          method: env["REQUEST_METHOD"],
+          path: env["PATH_INFO"],
+          query_string: env["QUERY_STRING"],
+          status: status.to_i,
+          duration: duration_in_ms(began_at, now).round(2),
+          remote_addr: env["REMOTE_ADDR"],
+          request: request_line(env),
+          length: extract_content_length(response_headers),
         }
 
         @extra_request_headers.each do |header, log_key|
@@ -39,8 +39,8 @@ module Rack
           end
         end
 
-        event = LogStash::Event.new(data.merge('tags' => ['request']))
-        msg = event.to_json + "\n"
+        event = LogStash::Event.new(data.merge("tags" => %w[request]))
+        msg = "#{event.to_json}\n"
         if @logger.respond_to?(:write)
           @logger.write(msg)
         else
@@ -53,12 +53,11 @@ module Rack
       end
 
       def request_line(env)
-        line = "#{env["REQUEST_METHOD"]} #{env["SCRIPT_NAME"]}#{env['PATH_INFO']}"
-        line << "?#{env["QUERY_STRING"]}" if env["QUERY_STRING"] and ! env["QUERY_STRING"].empty?
-        line << " #{env["SERVER_PROTOCOL"]}"
+        line = "#{env['REQUEST_METHOD']} #{env['SCRIPT_NAME']}#{env['PATH_INFO']}"
+        line << "?#{env['QUERY_STRING']}" if env["QUERY_STRING"] && !env["QUERY_STRING"].empty?
+        line << " #{env['SERVER_PROTOCOL']}"
         line
       end
-
-    end # Logger
+    end
   end
 end

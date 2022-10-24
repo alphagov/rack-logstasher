@@ -3,10 +3,9 @@
 # Require this file using `require "spec_helper"` to ensure that it is only
 # loaded once.
 
-
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
+Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |f| require f }
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -17,5 +16,5 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = 'random'
+  config.order = "random"
 end
