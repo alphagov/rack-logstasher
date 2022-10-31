@@ -1,4 +1,4 @@
-# Unreleased
+# 1.1.0
 
 - Require Ruby 2.7 and greater
 
