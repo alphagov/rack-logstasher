@@ -1,6 +1,8 @@
 # Rack::Logstasher
 
-Rack middleware to log requests in logstash json event format
+Rack middleware to log requests in logstash json event format.
+It is designed to give Rails-like logging to Sinatra apps.
+The gem is currently used by [search-api](https://github.com/alphagov/search-api) and [contentful-listener-api](https://github.com/alphagov/contentful-listener-api).
 
 ## Installation
 
