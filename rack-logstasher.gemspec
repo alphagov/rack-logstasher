@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_dependency "logstash-event", "~> 1.2"
-  spec.add_dependency "rack", "~> 2.0"
+  spec.add_dependency "rack", ">= 2", "< 4"
 
   spec.add_development_dependency "rack-test", "~> 2"
   spec.add_development_dependency "rake"
