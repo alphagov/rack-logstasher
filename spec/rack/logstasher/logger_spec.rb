@@ -110,7 +110,7 @@ describe Rack::Logstasher::Logger do
 
       it "adds specified extra response headers to the log under the given key" do
         extra_response_headers["foo"] = "header_foo"
-        inner_response_headers["Foo"] = "bar"
+        inner_response_headers["foo"] = "bar"
         get "/something"
 
         log_details = JSON.parse(last_log_line)
@@ -130,16 +130,6 @@ describe Rack::Logstasher::Logger do
       it "handles dashes in header name" do
         extra_response_headers["X-Cache"] = "cache_status"
         inner_response_headers["X-Cache"] = "MISS"
-        get "/something"
-
-        log_details = JSON.parse(last_log_line)
-
-        expect(log_details["cache_status"]).to eq("MISS")
-      end
-
-      it "matches header in a case-insensitive fashion" do
-        extra_response_headers["X-CacHe"] = "cache_status"
-        inner_response_headers["x-cAche"] = "MISS"
         get "/something"
 
         log_details = JSON.parse(last_log_line)
