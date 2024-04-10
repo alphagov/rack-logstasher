@@ -1,4 +1,4 @@
-## Unreleased
+## 2.1.0
 
 * Drop support for Ruby 2.7.
 
