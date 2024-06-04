@@ -61,7 +61,7 @@ describe Rack::Logstasher::Logger do
         Rack::Logstasher::Logger.new(
           proc { |_env| [200, {}, ["Inner app response"]] },
           Logger.new(tmp_logfile_path),
-          extra_request_headers: extra_request_headers,
+          extra_request_headers:,
         )
       end
 
@@ -104,7 +104,7 @@ describe Rack::Logstasher::Logger do
             [200, headers, ["Inner app response"]]
           end,
           Logger.new(tmp_logfile_path),
-          extra_response_headers: extra_response_headers,
+          extra_response_headers:,
         )
       end
 
