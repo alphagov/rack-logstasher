@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rack-test", "~> 2"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3"
-  spec.add_development_dependency "rubocop-govuk", "4.17.1"
+  spec.add_development_dependency "rubocop-govuk", "4.18.0"
   spec.add_development_dependency "simplecov"
 end
