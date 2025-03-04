@@ -1,3 +1,7 @@
+# 2.2.1
+
+* Ratchet version number for Action Linting change
+
 # 2.2.0
 
 * Drop support for Ruby 3.0
