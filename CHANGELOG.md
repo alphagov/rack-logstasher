@@ -1,3 +1,7 @@
+# 2.2.2
+
+* Configure CI workflow to handle concurrent releases ([#75](https://github.com/alphagov/rack-logstasher/pull/75))
+
 # 2.2.1
 
 * Ratchet version number for Action Linting change
