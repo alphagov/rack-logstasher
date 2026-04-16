@@ -1,3 +1,6 @@
+# 2.2.3 
+* Set dependency cooldowns for Dependabot
+
 # 2.2.2
 
 * Configure CI workflow to handle concurrent releases ([#75](https://github.com/alphagov/rack-logstasher/pull/75))
