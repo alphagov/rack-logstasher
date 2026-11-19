@@ -1,3 +1,8 @@
+# 3.0.0
+
+* **BREAKING** Drop support for Ruby 3.1 and 3.2
+* Bump Ruby to 4.0.10
+
 # 2.2.5
 
 * Update dependencies
